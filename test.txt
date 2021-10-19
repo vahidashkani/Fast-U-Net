@@ -1,0 +1,4 @@
+test_data/image/1588.jpg test_data/mask/1588.jpg
+test_data/image/1582.jpg test_data/mask/1582.jpg
+test_data/image/1576.jpg test_data/mask/1576.jpg
+
