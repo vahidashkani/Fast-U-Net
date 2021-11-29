@@ -3,4 +3,4 @@ We have provided details of Fast U-Net model for medical image segmentation task
 
 # Dataset
 In this folder the train and test sets are provided. To have sufficient train, you must combine all image files (image1, image2, image3) in a single image folder.
-moreover, train and validation sets are separated.
+moreover, train and validation sets are listed in .txt Docs.
