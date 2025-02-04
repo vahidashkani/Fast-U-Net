@@ -12,15 +12,19 @@ from PIL import ImageOps
 ############################################################################################################
 def pil_loader(path):
     """JPG and PNG format loader"""
+    # Converts the image to grayscale mode ('L'), where pixel values are represented by a single channel (0–255).
     img = Image.open(path).convert('L')
     #below code added zero padding to input images
     expected_size=[480,320]
+    # Resizes the image to fit within the specified bounds without changing its aspect ratio. 
     img.thumbnail((expected_size[0], expected_size[1]))
-    # print(img.size)
+    # Compute the differences between the target size (480, 320) and the current image size.
     delta_width = expected_size[0] - img.size[0]
     delta_height = expected_size[1] - img.size[1]
+    # pad_width and pad_height: Calculate the amount of padding needed on each side to center the image.
     pad_width = delta_width // 2
     pad_height = delta_height // 2
+    # padding: Defines the padding amounts in the format (left, top, right, bottom).
     padding = (pad_width, pad_height, delta_width - pad_width, delta_height - pad_height)
     im = ImageOps.expand(img, padding)
     return im
@@ -28,14 +32,19 @@ def pil_loader(path):
 ############################################################################################################
 #define a function to add pre-processing to inputs
 def transform_(X):
-    """Normalize input to have mean 1 and std 1"""    
+    """Normalize input to have mean 1 and std 1""" 
+    # Ensures that the input array X contains non-zero elements to avoid division errors when normalizing.
     if np.any(X!=0):
         feature_range=(0,1)
         min_x = X.min()
         max_x = X.max()
+        # scale_: Scaling factor that stretches the range of values to [0, 1].
         scale_ = (feature_range[1] - feature_range[0]) / (max_x - min_x)
+        # min_: Shift factor that ensures the minimum value maps to 0.
         min_ = feature_range[0] - min_x * scale_
+        # scale_: Scales the values in X to fit within the feature range.
         X *= scale_
+        # Shifts the scaled values so that they lie between 0 and 1.
         X += min_
     return X
 
